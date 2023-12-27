@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         //base-container
         child: Container(
+          padding: const EdgeInsets.only(top: 30.0),
           alignment: Alignment.center,
           width: double.infinity,
           height: double.infinity,
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 2.0,
                         color: const Color.fromARGB(255, 92, 91, 91)),
                     borderRadius: BorderRadius.circular(20.0)),
-                margin: const EdgeInsets.only(top: 25.0),
+                margin: const EdgeInsets.only(top: 40.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -208,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         min: 0,
                         max: 100,
                         divisions: 10,
-                        activeColor: const Color.fromARGB(255, 204, 135, 216),
+                        activeColor: const Color.fromARGB(255, 162, 79, 177),
                         inactiveColor: Colors.blueGrey,
                         onChanged: (double newValue) {
                           setState(() {
