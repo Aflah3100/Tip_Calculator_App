@@ -1,16 +1,45 @@
-# tip_calculator_app
+# Tip Calculator
 
-A new Flutter project.
+A simple Flutter application to calculate tips based on the bill amount, tip percentage, and the number of people splitting the bill.
+
+## Features
+
+- **Bill Amount:** Enter the total bill amount.
+- **Tip Percentage:** Adjust the tip percentage using the slider.
+- **Split:** Adjust the number of people splitting the bill.
+- **Total Per Person:** View the calculated total per person.
+- **Reset:** Clear all inputs and reset the calculator.
+
+## Screenshots
+![Screenshot 1](assets/screenshots/screenshot_1.png)
+![Screenshot 2](assets/screenshots/screenshot_2.png)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run this project locally, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. **Clone the repository:**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    ```bash
+    git clone https://github.com/aflah3100/tip_calculator_flutter.git
+    cd tip_calculator_flutter
+    ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. **Install dependencies:**
+
+    ```bash
+    flutter pub get
+    ```
+
+3. **Run the app:**
+
+    ```bash
+    flutter run
+    ```
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or create a pull request.
+
+
+
