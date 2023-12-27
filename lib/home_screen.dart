@@ -14,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _tipAmount = 0;
   int _tipPercentage = 0;
   double _billAmount = 0.00;
+
   var billAmountController = TextEditingController();
 
   //Widgets
