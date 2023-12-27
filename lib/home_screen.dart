@@ -13,6 +13,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _count = 1;
   int _tipAmount = 0;
   int _tipPercentage = 0;
+  double _billAmount = 0.00;
+  var billAmountController = TextEditingController();
 
   //Widgets
   @override
@@ -60,25 +62,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       //Display Container
-                      child: Container(
-                        width: 100,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 23, 32, 42),
-                              width: 2.0,
-                              style: BorderStyle.solid,
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                            ),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Text(
-                          "\u20B9 ${_totalAmount.toString()}",
-                          style: const TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w800),
-                        )),
-                      ),
+                      child: Center(
+                          child: Text(
+                        "\u20B9 ${_totalAmount.toString()}",
+                        style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800,
+                            color: Color.fromARGB(255, 219, 198, 190)),
+                      )),
                     ),
                   ],
                 ),
@@ -98,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextField(
+                      controller: billAmountController,
                       decoration: InputDecoration(
                           labelText: "Bill Amount",
                           prefixText: "Bill Amount: ",
@@ -108,6 +100,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(30.0))),
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
+                      onChanged: (String billAmount) {
+                        setState(() {
+                          try {
+                            _billAmount = double.parse(billAmount);
+                            _totalAmount =
+                                (double.parse(billAmount) + _tipAmount) /
+                                    _count;
+                          } catch (e) {
+                            _totalAmount = 0.00;
+                            billAmountController.clear();
+                          }
+                        });
+                      },
                     ), //Bill Amount
                     Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -122,25 +127,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 243, 111, 111),
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: const Center(
-                                      child: Text(
-                                    "-",
-                                    style: TextStyle(fontSize: 23),
-                                  )),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    if (_count > 1) _count--;
-                                  });
-                                },
-                              ),
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 243, 111, 111),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    child: const Center(
+                                        child: Text(
+                                      "-",
+                                      style: TextStyle(fontSize: 23),
+                                    )),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      if (_count > 1) {
+                                        _count--;
+                                      }
+                                      _totalAmount =
+                                          (_billAmount + _tipAmount) / _count;
+                                    });
+                                  },
+                                  onLongPress: () => _count = 1),
                               const SizedBox(width: 10.0),
                               Text(
                                 _count.toString(),
@@ -169,6 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   setState(() {
                                     _count++;
+                                    _totalAmount =
+                                        (_billAmount + _tipAmount) / _count;
                                   });
                                 },
                               ),
@@ -213,10 +225,42 @@ class _HomeScreenState extends State<HomeScreen> {
                         inactiveColor: Colors.blueGrey,
                         onChanged: (double newValue) {
                           setState(() {
-                            _tipPercentage = newValue.toInt();
+                            _tipPercentage = newValue.round();
+                            try {
+                              _tipAmount =
+                                  (_billAmount * (_tipPercentage / 100))
+                                      .toInt();
+                              _totalAmount =
+                                  (_billAmount + _tipAmount) / _count;
+                            } catch (e) {
+                              _tipAmount = 0;
+                              _billAmount = 0;
+                            }
                           });
                         })
                   ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      billAmountController.clear();
+                      _billAmount = 0.0;
+                      _totalAmount = 0.0;
+                      _tipAmount = 0;
+                      _count = 1;
+                      _tipPercentage = 0;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 230, 87, 77),
+                  ),
+                  child: const Text(
+                    "Reset",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               )
             ],
