@@ -11,7 +11,7 @@ A simple Flutter application to calculate tips based on the bill amount, tip per
 - **Reset:** Clear all inputs and reset the calculator.
 
 ## Screenshots
-![Screenshot 1](assets/screenshots/screenshot_1.png)
+![Screenshot 1](github.com/Aflah3100/Tip_Calculator_App/blob/master/assets/screenshots/screenshot_1.jpg)
 ![Screenshot 2](assets/screenshots/screenshot_2.png)
 
 ## Getting Started
