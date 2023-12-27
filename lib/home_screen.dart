@@ -10,6 +10,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //Variables
   double _totalAmount = 0.00;
+  int _count = 1;
+  int _tipAmount = 0;
+  int _tipPercentage = 0;
+
+  //Widgets
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.vertical,
             padding: const EdgeInsets.all(30),
             children: [
+              // Container-1
               Container(
                 width: 150,
                 height: 160,
@@ -67,12 +73,148 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Text(
-                          "\$ ${_totalAmount.toString()}",
+                          "\u20B9 ${_totalAmount.toString()}",
                           style: const TextStyle(
                               fontSize: 25, fontWeight: FontWeight.w800),
                         )),
                       ),
-                    )
+                    ),
+                  ],
+                ),
+              ),
+              //Container -2
+              Container(
+                width: 150,
+                padding: const EdgeInsets.all(25.0),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(
+                        width: 2.0,
+                        color: const Color.fromARGB(255, 92, 91, 91)),
+                    borderRadius: BorderRadius.circular(20.0)),
+                margin: const EdgeInsets.only(top: 25.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: "Bill Amount",
+                          prefixText: "Bill Amount: ",
+                          prefixIcon: const Icon(Icons.currency_rupee_sharp),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 1, style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(30.0))),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                    ), //Bill Amount
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Split",
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 243, 111, 111),
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  child: const Center(
+                                      child: Text(
+                                    "-",
+                                    style: TextStyle(fontSize: 23),
+                                  )),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    if (_count > 1) _count--;
+                                  });
+                                },
+                              ),
+                              const SizedBox(width: 10.0),
+                              Text(
+                                _count.toString(),
+                                style: const TextStyle(
+                                    color: Colors.greenAccent,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.0),
+                              ),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              InkWell(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 243, 111, 111),
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  child: const Center(
+                                      child: Text(
+                                    "+",
+                                    style: TextStyle(fontSize: 23),
+                                  )),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _count++;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 15.0, right: 15.0, bottom: 15.0, top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Tip",
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                          Text(
+                            "\u20B9 ${_tipAmount.toString()}",
+                            style: const TextStyle(
+                                color: Colors.purple,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Text(
+                      "${_tipPercentage.toString()}%",
+                      style: const TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Slider(
+                        value: _tipPercentage.toDouble(),
+                        min: 0,
+                        max: 100,
+                        divisions: 10,
+                        activeColor: const Color.fromARGB(255, 204, 135, 216),
+                        inactiveColor: Colors.blueGrey,
+                        onChanged: (double newValue) {
+                          setState(() {
+                            _tipPercentage = newValue.toInt();
+                          });
+                        })
                   ],
                 ),
               )
